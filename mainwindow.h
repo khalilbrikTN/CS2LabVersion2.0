@@ -20,6 +20,8 @@ private slots:
 
     void on_MergeSort_clicked();
 
+    void on_STLsort_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -122,7 +122,7 @@
      <string>Sort Using Merge Sort</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="message">
     <property name="geometry">
      <rect>
       <x>340</x>

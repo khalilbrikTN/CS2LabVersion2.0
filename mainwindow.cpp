@@ -4,7 +4,9 @@
 
 using namespace std;
 
-vector<int> numbers;
+vector<int> numbersNotSorted;
+vector<int> numbersSorted;
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,7 +24,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_generate_clicked()
 {
     ui->listWidget->clear();
-    numbers.clear();
+    numbersNotSorted.clear();
 
     int size=(ui->size->text()).toInt();
     int number;
@@ -33,87 +35,109 @@ void MainWindow::on_generate_clicked()
    // Generate a list of integers
    for (int i = 0; i < size; ++i)
    {
-       number = rand()%11;
-       numbers.push_back(number);
+       number = rand()%1001;
+       numbersNotSorted.push_back(number);
        widgetItem = QString::number(number);
        listwidget.addItem(widgetItem);
         ui->listWidget->insertItem(i+1, widgetItem);
 
    }
+   numbersSorted = numbersNotSorted;
 }
 
 
-void merge(vector<int> array, int const left, int const mid, int const right)
-{
-    auto const subArrayOne = mid - left + 1;
-    auto const subArrayTwo = right - mid;
+void merge(std::vector<int>& arr, int l, int m, int r) {
+    int n1 = m - l + 1;
+    int n2 = r - m;
 
-    // Create temp lists
-    QList<int> leftArray, rightArray;
+    // Temp vectors
+    std::vector<int> L(n1), R(n2);
 
-    // Copy data to temp lists leftArray[] and rightArray[]
-    for (auto i = 0; i < subArrayOne; i++)
-        leftArray.append(array[left + i]);
-    for (auto j = 0; j < subArrayTwo; j++)
-        rightArray.append(array[mid + 1 + j]);
+    // Copy data to temp vectors
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
 
-    auto indexOfSubArrayOne = 0, // Initial index of first sub-array
-        indexOfSubArrayTwo = 0; // Initial index of second sub-array
-    int indexOfMergedArray = left; // Initial index of merged array
+    // Merge the temp vectors back into arr[l..r]
+    int i = 0; // Initial index of first subvector
+    int j = 0; // Initial index of second subvector
+    int k = l; // Initial index of merged subvector
 
-    // Merge the temp lists back into array[left..right]
-    while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
-        if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo]) {
-            array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-            indexOfSubArrayOne++;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
         }
-        else {
-            array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-            indexOfSubArrayTwo++;
-        }
-        indexOfMergedArray++;
+        k++;
     }
-    // Copy the remaining elements of
-    // left[], if there are any
-    while (indexOfSubArrayOne < subArrayOne) {
-        array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-        indexOfSubArrayOne++;
-        indexOfMergedArray++;
+
+    // Copy the remaining elements of L[], if there are any
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
     }
-    // Copy the remaining elements of
-    // right[], if there are any
-    while (indexOfSubArrayTwo < subArrayTwo) {
-        array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-        indexOfSubArrayTwo++;
-        indexOfMergedArray++;
+
+    // Copy the remaining elements of R[], if there are any
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
     }
 }
 
-void mergeSort(vector<int>& array, int begin, int end)
-{
-    if (begin >= end)
+void mergeSort(std::vector<int>& arr, int l, int r) {
+    if (l >= r) {
         return; // Returns recursively
-
-    auto mid = begin + (end - begin) / 2;
-    mergeSort(array, begin, mid);
-    mergeSort(array, mid + 1, end);
-    merge(array, begin, mid, end);
+    }
+    int m = l + (r - l) / 2;
+    mergeSort(arr, l, m);
+    mergeSort(arr, m + 1, r);
+    merge(arr, l, m, r);
 }
+
+
 void MainWindow::on_MergeSort_clicked()
 {
     ui->listWidget->clear();
+    ui->message->setText("Array Sorted");
 
-    mergeSort(numbers,0,numbers.size()-1);
+    mergeSort(numbersSorted,0,numbersSorted.size()-1);
+
     QListWidget listwidget;
     QString widgetItem;
 
-    for (int i = 0; i < int(numbers.size()); ++i)
+    for (int i = 0; i < int(numbersSorted.size()); ++i)
     {
-        widgetItem = QString::number(numbers.at(i));
+        widgetItem = QString::number(numbersSorted.at(i));
         listwidget.addItem(widgetItem);
         ui->listWidget->insertItem(i+1, widgetItem);
 
     }
 
+}
+
+
+void MainWindow::on_STLsort_clicked()
+{
+    numbersSorted = numbersNotSorted;
+    ui->listWidget->clear();
+    ui->message->setText("Array Sorted");
+    sort(numbersSorted.begin(), numbersSorted.end());
+
+    QListWidget listwidget;
+    QString widgetItem;
+
+    for (int i = 0; i < int(numbersSorted.size()); ++i)
+    {
+        widgetItem = QString::number(numbersSorted.at(i));
+        listwidget.addItem(widgetItem);
+        ui->listWidget->insertItem(i+1, widgetItem);
+
+    }
 }
 
