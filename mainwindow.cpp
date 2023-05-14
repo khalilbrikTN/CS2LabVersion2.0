@@ -46,6 +46,36 @@ void MainWindow::on_generate_clicked()
 }
 
 
+int binarySearch(std::vector<int>& arr, int target) {
+    int left = 0;
+    int right = arr.size() - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == target) {
+            return mid; // return the index if target found
+        }
+        if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1; // return -1 if target not found
+}
+
+
+int linearSearch(std::vector<int>& arr, int target) {
+    for (int i = 0; i < int(arr.size()); i++) {
+        if (arr[i] == target) {
+            return i; // return the index if target found
+        }
+    }
+    return -1; // return -1 if target not found
+}
+
+
 void merge(std::vector<int>& arr, int l, int m, int r) {
     int n1 = m - l + 1;
     int n2 = r - m;
@@ -139,5 +169,34 @@ void MainWindow::on_STLsort_clicked()
         ui->listWidget->insertItem(i+1, widgetItem);
 
     }
+}
+
+
+
+
+
+void MainWindow::on_searchBTN_clicked()
+{
+
+    QString msg = "";
+    numbersSorted = numbersNotSorted;
+    sort(numbersSorted.begin(), numbersSorted.end());
+    int result = -1;
+    int target = ui->numberSearch->text().toInt();
+
+
+    if(ui->normalbtn->isChecked()){
+        result = linearSearch(numbersSorted,target);
+    }else if(ui->binarybtn->isChecked()){
+        result = binarySearch(numbersSorted,target);
+    };
+
+    if(result == -1){
+        msg = "Number searched is not found";
+    }else{
+        msg = "Number searched is found";
+
+    }
+    ui->out->setText(msg);
 }
 

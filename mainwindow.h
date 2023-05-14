@@ -22,6 +22,9 @@ private slots:
 
     void on_STLsort_clicked();
 
+
+    void on_searchBTN_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
