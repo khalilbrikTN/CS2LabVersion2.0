@@ -20,7 +20,7 @@
       <x>260</x>
       <y>510</y>
       <width>291</width>
-      <height>24</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -50,7 +50,7 @@
    <widget class="QLabel" name="sortingAlgorithm">
     <property name="geometry">
      <rect>
-      <x>570</x>
+      <x>550</x>
       <y>110</y>
       <width>151</width>
       <height>31</height>
@@ -95,6 +95,9 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 255, 255);</string>
+    </property>
     <property name="text">
      <string>Choose you search method</string>
     </property>
@@ -103,9 +106,9 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>460</y>
+      <y>470</y>
       <width>291</width>
-      <height>24</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -128,7 +131,7 @@
    <widget class="QLabel" name="SearchAlgorithm">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>560</x>
       <y>90</y>
       <width>141</width>
       <height>31</height>
@@ -141,8 +144,8 @@
    <widget class="QPushButton" name="searchBTN">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>330</y>
+      <x>640</x>
+      <y>446</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -180,33 +183,85 @@
    <widget class="QLineEdit" name="numberSearch">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>270</y>
-      <width>113</width>
-      <height>25</height>
+      <x>610</x>
+      <y>370</y>
+      <width>131</width>
+      <height>51</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>380</y>
-      <width>80</width>
-      <height>24</height>
+      <x>570</x>
+      <y>100</y>
+      <width>71</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>btn</string>
+     <string>Data Size:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="out">
+   <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>592</x>
-      <y>150</y>
-      <width>151</width>
+      <x>560</x>
+      <y>200</y>
+      <width>131</width>
       <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sorting Algorithm</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>290</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Searching Algorithm</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="outSize">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>80</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sortingAlgo">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>180</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="searchingAlgo">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>280</y>
+      <width>91</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">

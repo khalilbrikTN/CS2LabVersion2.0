@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <vector>
+#include <QMessageBox>
 
 using namespace std;
 
 vector<int> numbersNotSorted;
 vector<int> numbersSorted;
+int sortTime;
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,6 +29,7 @@ void MainWindow::on_generate_clicked()
     numbersNotSorted.clear();
 
     int size=(ui->size->text()).toInt();
+    ui->outSize->setText(QString::number(size));
     int number;
 
     QListWidget listwidget;
@@ -133,6 +136,8 @@ void mergeSort(std::vector<int>& arr, int l, int r) {
 
 void MainWindow::on_MergeSort_clicked()
 {
+    ui->sortingAlgo->setText("Merge Sort");
+    auto start = std::chrono::steady_clock::now();
     ui->listWidget->clear();
     ui->message->setText("Array Sorted");
 
@@ -148,12 +153,18 @@ void MainWindow::on_MergeSort_clicked()
         ui->listWidget->insertItem(i+1, widgetItem);
 
     }
+    auto end = std::chrono::steady_clock::now();
+    sortTime = chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 
 }
 
 
 void MainWindow::on_STLsort_clicked()
 {
+
+    ui->sortingAlgo->setText("STL Sort");
+
+    auto start = std::chrono::steady_clock::now();
     numbersSorted = numbersNotSorted;
     ui->listWidget->clear();
     ui->message->setText("Array Sorted");
@@ -169,6 +180,8 @@ void MainWindow::on_STLsort_clicked()
         ui->listWidget->insertItem(i+1, widgetItem);
 
     }
+    auto end = std::chrono::steady_clock::now();
+    sortTime = chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 }
 
 
@@ -177,26 +190,37 @@ void MainWindow::on_STLsort_clicked()
 
 void MainWindow::on_searchBTN_clicked()
 {
-
-    QString msg = "";
-    numbersSorted = numbersNotSorted;
-    sort(numbersSorted.begin(), numbersSorted.end());
+    long searchtime = 55;
     int result = -1;
     int target = ui->numberSearch->text().toInt();
 
 
     if(ui->normalbtn->isChecked()){
+        ui->searchingAlgo->setText("Normal Search");
+        auto start = std::chrono::steady_clock::now();
         result = linearSearch(numbersSorted,target);
+        auto end = std::chrono::steady_clock::now();
+        searchtime = chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+
     }else if(ui->binarybtn->isChecked()){
+        ui->searchingAlgo->setText("Binary Search");
+        auto start = std::chrono::steady_clock::now();
         result = binarySearch(numbersSorted,target);
+        auto end = std::chrono::steady_clock::now();
+        searchtime = chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
     };
 
-    if(result == -1){
-        msg = "Number searched is not found";
-    }else{
-        msg = "Number searched is found";
 
-    }
-    ui->out->setText(msg);
+    QMessageBox Qmessage;
+
+    if(result == -1){
+        QMessageBox::information(this,"Number not found","The number was not found in the array\n the searching took time "+QString::number(searchtime)+" nanoseconds \n the sorting took time "+ QString::number(sortTime)+" nanoseconds");
+
+    }else{
+        QMessageBox::information(this,"Number was found","The number was found in the array\n the searching took time "+QString::number(searchtime)+" nanoseconds \n the sorting took time "+ QString::number(sortTime)+" nanoseconds");
+
+    };
 }
+
+
 
